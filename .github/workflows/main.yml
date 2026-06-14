@@ -34,8 +34,11 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Upload to Transfer.sh (Direct Link)
-        run: |
-          echo "=== ССЫЛКА НА ТВОЙ APK ТУТ ==="
-          curl --upload-file build/app/outputs/flutter-apk/app-release.apk https://transfer.sh/neo-store.apk
-          echo "=============================="
+      - name: Move APK to root for easy upload
+        run: cp build/app/outputs/flutter-apk/app-release.apk ./neo_store_app.apk
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NEO-STORE-APK
+          path: ./neo_store_app.apk
