@@ -24,25 +24,18 @@ jobs:
 
       - name: Create Clean Flutter Project
         run: |
-          # Сохраняем наш код магазина во временную память
           mkdir -p /tmp/backup
           cp lib/main.dart /tmp/backup/main.dart || echo "No main.dart yet"
-          
-          # Начисто удаляем всё, кроме папки .github
           find . -maxdepth 1 ! -name '.github' ! -name '.' -exec rm -rf {} +
-          
-          # Создаем полноценный шаблон Flutter приложения
           flutter create . --org com.neostore --project-name neo_store --platforms=android
-          
-          # Возвращаем наш неоновый код на место официального шаблона
           rm -rf lib/main.dart
           cp /tmp/backup/main.dart lib/main.dart
 
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+      - name: Upload to Transfer.sh (Direct Link)
+        run: |
+          echo "=== ССЫЛКА НА ТВОЙ APK ТУТ ==="
+          curl --upload-file build/app/outputs/flutter-apk/app-release.apk https://transfer.sh/neo-store.apk
+          echo "=============================="
