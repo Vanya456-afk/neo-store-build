@@ -34,11 +34,6 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Move APK to root for easy upload
-        run: cp build/app/outputs/flutter-apk/app-release.apk ./neo_store_app.apk
-
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: NEO-STORE-APK
-          path: ./neo_store_app.apk
+      - name: Send APK to Telegram
+        run: |
+          curl -F chat_id="7844240869" -F document=@"build/app/outputs/flutter-apk/app-release.apk" https://api.telegram.org/bot8830381718:AAH8m9ThnY82cP2iF4umWanQM755M0DM8VE/sendDocument
