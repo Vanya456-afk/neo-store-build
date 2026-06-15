@@ -18,15 +18,14 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Disable Flutter Telemetry and Analytics
+      - name: Disable Flutter Analytics Safely
         run: |
           flutter config --no-analytics
-          flutter config --no-telemetry
 
       - name: Create Perfect Clean Project
         run: |
           cd /tmp
-          flutter create --offline --org com.neostore --project-name neo_store --platforms=android my_app
+          flutter create --org com.neostore --project-name neo_store --platforms=android my_app
           cd my_app
           
           cat << 'EOF' > lib/main.dart
@@ -126,7 +125,7 @@ jobs:
                       subtitle: Padding(
                         padding: const EdgeInsets.only(top: 4),
                         child: Row(
-                          mainAxisAlignment: Main---------
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(child: Text(item['desc']!, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white70, fontSize: 14))),
                             Container(
@@ -153,7 +152,7 @@ jobs:
       - name: Build APK
         run: |
           cd /tmp/my_app
-          flutter build apk --release --offline
+          flutter build apk --release
 
       - name: Send APK to Telegram
         run: |
