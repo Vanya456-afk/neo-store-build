@@ -13,10 +13,10 @@ class NeoTelegramStore extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Neo Store TG',
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color(0xFF17212B), // Темная тема ТГ
-        primaryColor: const Color(0xFF242F3D), // Цвет плашек ТГ
+        scaffoldBackgroundColor: const Color(0xFF17212B),
+        primaryColor: const Color(0xFF242F3D),
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF2F8CCF), // Фирменный синий ТГ
+          seedColor: const Color(0xFF2F8CCF),
           brightness: Brightness.dark,
         ),
       ),
@@ -30,86 +30,76 @@ class MainStoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Список наших неоновых товаров (как каналы в ТГ)
     final List<Map<String, String>> products = [
       {
-        'title': '⚡ Смартфон Neo Phone X',
-        'desc': 'Супер-амолед экран, неоновая подсветка корпуса...',
+        'title': 'Смартфон Neo Phone X',
+        'desc': 'Супер-амолед экран, неоновая подсветка...',
         'price': '990 \$',
         'time': '12:40'
       },
       {
-        'title': '🎧 Наушники Cyber Pods',
-        'desc': 'Идеальный звук, активное шумоподавление и басс...',
+        'title': 'Наушники Cyber Pods',
+        'desc': 'Идеальный звук и басс...',
         'price': '150 \$',
         'time': '11:15'
       },
       {
-        'title': '⌚ Смарт-часы Neon Watch',
-        'desc': 'Пульс, шаги, уведомления из ТГ и лазерный дизайн...',
+        'title': 'Смарт-часы Neon Watch',
+        'desc': 'Пульс, шаги, уведомления из ТГ...',
         'price': '220 \$',
         'time': 'Вчера'
       },
       {
-        'title': '💻 Ноутбук Matrix Book',
-        'desc': 'Мощный процессор для программирования ботов...',
+        'title': 'Ноутбук Matrix Book',
+        'desc': 'Мощный процессор для кода...',
         'price': '1499 \$',
         'time': 'Вчера'
       },
     ];
 
     return Scaffold(
-      // Шапка в стиле Telegram
       appBar: AppBar(
         backgroundColor: const Color(0xFF242F3D),
-        elevation: 1,
         title: const Text(
           'Neo Store',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.search, color: Colors.white70),
+            icon: const Icon(Icons.search),
             onPressed: () {},
           ),
         ],
       ),
-
-      // Боковое меню (как в ТГ при свайпе слева)
       drawer: Drawer(
-        backgroundColor: const Color(0xFF17212B),
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const UserAccountsDrawerHeader(
-              decoration: BoxDecoration(color: Color(0xFF242F3D)),
-              accountName: Text('Админ Магазина', style: TextStyle(fontWeight: FontWeight.bold)),
-              accountEmail: Text('@neo_store_admin'),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Color(0xFF2F8CCF),
-                child: Text('NS', style: TextStyle(color: Colors.white, fontSize: 24)),
+        child: Container(
+          color: const Color(0xFF17212B),
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              const UserAccountsDrawerHeader(
+                decoration: BoxDecoration(color: Color(0xFF242F3D)),
+                accountName: Text('Админ Магазина', style: TextStyle(fontWeight: FontWeight.bold)),
+                accountEmail: Text('@neo_store_admin'),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Color(0xFF2F8CCF),
+                  child: Text('NS', style: TextStyle(color: Colors.white, fontSize: 24)),
+                ),
               ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.shopping_bag, color: Color(0xFF2F8CCF)),
-              title: const Text('Мои заказы'),
-              onPressed: () {},
-            ),
-            ListTile(
-              leading: const Icon(Icons.discount, color: Colors.orange),
-              title: const Text('Промокоды'),
-              onPressed: () {},
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings, color: Colors.grey),
-              title: const Text('Настройки'),
-              onPressed: () {},
-            ),
-          ],
+              ListTile(
+                leading: const Icon(Icons.shopping_bag, color: Color(0xFF2F8CCF)),
+                title: const Text('Мои заказы', style: TextStyle(color: Colors.white)),
+                onPressed: () {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.discount, color: Colors.orange),
+                title: const Text('Промокоды', style: TextStyle(color: Colors.white)),
+                onPressed: () {},
+              ),
+            ],
+          ),
         ),
       ),
-
-      // Список товаров в стиле списка чатов
       body: ListView.separated(
         itemCount: products.length,
         separatorBuilder: (context, index) => const Divider(
@@ -120,10 +110,10 @@ class MainStoreScreen extends StatelessWidget {
           final item = products[index];
           return ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               radius: 25,
-              backgroundColor: const Color(0xFF242F3D),
-              child: const Icon(Icons.layers, color: Color(0xFF2F8CCF)),
+              backgroundColor: Color(0xFF242F3D),
+              child: Icon(Icons.layers, color: Color(0xFF2F8CCF)),
             ),
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -165,20 +155,13 @@ class MainStoreScreen extends StatelessWidget {
                 ],
               ),
             ),
-            onTap: () {
-              // Логика при клике на товар
-            },
           );
         },
       ),
-
-      // Круглая кнопка корзины (как синий карандашик в ТГ)
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF2F8CCF),
         child: const Icon(Icons.shopping_cart, color: Colors.white),
-        onPressed: () {
-          // Открытие корзины
-        },
+        onPressed: () {},
       ),
     );
   }
