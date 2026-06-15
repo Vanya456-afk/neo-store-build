@@ -19,7 +19,6 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.x'
           channel: 'stable'
 
       - name: Create Clean Flutter Project
@@ -31,8 +30,13 @@ jobs:
           rm -rf lib/main.dart
           cp /tmp/backup/main.dart lib/main.dart
 
+      - name: Clean and Pub Get
+        run: |
+          flutter clean
+          flutter pub get
+
       - name: Build APK
-        run: flutter build apk --release
+        run: flutter build apk --release --no-pub
 
       - name: Send APK to Telegram
         run: |
